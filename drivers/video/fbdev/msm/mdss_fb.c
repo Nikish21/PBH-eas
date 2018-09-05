@@ -76,6 +76,9 @@ extern bool lcd_suspend_flag;
 #define EXPORT_COMPAT(x)
 #endif
 
+int backlight_min = 0;
+module_param(backlight_min, int, 0644);
+
 #define MAX_FBI_LIST 32
 
 #ifndef TARGET_HW_MDSS_MDP3
@@ -305,6 +308,10 @@ static void mdss_fb_set_bl_brightness(struct led_classdev *led_cdev,
 
 	if (value > mfd->panel_info->brightness_max)
 		value = mfd->panel_info->brightness_max;
+
+	// Boeffla: apply min limits for LCD backlight (0 is exception for display off)
+	if (value != 0 && value < backlight_min)
+		value = backlight_min;
 
 	/* This maps android backlight level 0 to 255 into
 	   driver backlight level 0 to bl_max with rounding */
