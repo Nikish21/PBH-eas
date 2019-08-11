@@ -3130,9 +3130,7 @@ static int mdss_dsi_event_handler(struct mdss_panel_data *pdata,
 					rc);
 		}
 		break;
-	case MDSS_EVENT_UPDATE_LIVEDISPLAY:
-		rc = mdss_livedisplay_update(ctrl_pdata, (int)(unsigned long) arg);
-		break;
+	
 	default:
 		pr_debug("%s: unhandled event=%d\n", __func__, event);
 		break;
